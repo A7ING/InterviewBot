@@ -2,12 +2,15 @@ from models.question import Question
 from services.db import SessionLocal
 import random
 
+
 class QuestionBank:
 
     def get_questions_by_category(self, category):
         session = SessionLocal()
         try:
-            questions = session.query(Question).filter(Question.category == category).all()
+            questions = (
+                session.query(Question).filter(Question.category == category).all()
+            )
             session.expunge_all()
 
             if not questions:
@@ -39,7 +42,11 @@ class QuestionBank:
     def get_question_by_id(self, question_id):
         session = SessionLocal()
         try:
-            question = session.query(Question).filter(Question.question_id == question_id).first()
+            question = (
+                session.query(Question)
+                .filter(Question.question_id == question_id)
+                .first()
+            )
             if question:
                 session.expunge(question)
             return question
@@ -67,11 +74,21 @@ class QuestionBank:
         finally:
             session.close()
 
-    def edit_question(self, question_id, new_text=None, new_category=None,
-                      new_options=None, new_correct_option=None):
+    def edit_question(
+        self,
+        question_id,
+        new_text=None,
+        new_category=None,
+        new_options=None,
+        new_correct_option=None,
+    ):
         session = SessionLocal()
         try:
-            question = session.query(Question).filter(Question.question_id == question_id).first()
+            question = (
+                session.query(Question)
+                .filter(Question.question_id == question_id)
+                .first()
+            )
             if not question:
                 return False
             if new_text is not None:
@@ -95,7 +112,11 @@ class QuestionBank:
     def delete_question(self, question_id):
         session = SessionLocal()
         try:
-            question = session.query(Question).filter(Question.question_id == question_id).first()
+            question = (
+                session.query(Question)
+                .filter(Question.question_id == question_id)
+                .first()
+            )
             if not question:
                 return False
             session.delete(question)

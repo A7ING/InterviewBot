@@ -3,13 +3,14 @@ from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
+
 class Question(Base):
-    __tablename__ = 'questions'
+    __tablename__ = "questions"
 
     question_id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(String, nullable=False)
     category = Column(String, nullable=False)
-    options = Column(JSON, nullable=False) 
+    options = Column(JSON, nullable=False)
     correct_option = Column(Integer, nullable=False)
 
     def is_correct(self, option_index):

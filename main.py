@@ -1,4 +1,10 @@
-from telegram.ext import Application, CallbackQueryHandler, CommandHandler, MessageHandler, filters
+from telegram.ext import (
+    Application,
+    CallbackQueryHandler,
+    CommandHandler,
+    MessageHandler,
+    filters,
+)
 
 from config import BOT_TOKEN
 from handlers.start_handler import start_command
@@ -28,7 +34,9 @@ def main():
     app.add_handler(CommandHandler("edit_question", edit_question_parse))
     app.add_handler(CommandHandler("delete_question", delete_question_parse))
 
-    app.add_handler(CallbackQueryHandler(choose_direction_callback, pattern=r"^direction:"))
+    app.add_handler(
+        CallbackQueryHandler(choose_direction_callback, pattern=r"^direction:")
+    )
     app.add_handler(CallbackQueryHandler(answer_callback, pattern=r"^answer:"))
     app.add_handler(CallbackQueryHandler(action_callback, pattern=r"^action:"))
 

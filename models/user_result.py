@@ -2,8 +2,9 @@ from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
 from models.question import Base
 
+
 class UserResult(Base):
-    __tablename__ = 'user_results'
+    __tablename__ = "user_results"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False)

@@ -3,6 +3,7 @@ from models.question import Question
 from data.test_questions import QUESTIONS
 from models.user_result import UserResult
 
+
 def seed_database():
     print("1. Ініціалізація бази даних")
     init_db()

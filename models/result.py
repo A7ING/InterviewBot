@@ -1,3 +1,6 @@
+import html
+
+
 class Result:
     def __init__(self):
         self.correct_answers = 0
@@ -20,21 +23,24 @@ class Result:
 
     def show_result(self):
         return (
-            f"Тест завершено.\n\n"
+            f"<b>Тест завершено.</b>\n\n"
             f"Правильних відповідей: {self.correct_answers}\n"
             f"Неправильних відповідей: {self.wrong_answers}\n"
-            f"Підсумковий бал: {self.total_score}"
+            f"Підсумковий бал: <b>{self.total_score}</b>"
         )
 
     def show_detailed_result(self):
-        lines = [self.show_result(), "", "Правильні відповіді:"]
+        lines = [self.show_result(), "", "<b>Детальна статистика:</b>"]
 
         for index, item in enumerate(self.answer_details, start=1):
             mark = "✓" if item["is_correct"] else "✗"
-            lines.append(
-                f"{index}. {mark} {item['question_text']}\n"
-                f"   Ваша відповідь: {item['user_answer']}\n"
-                f"   Правильна відповідь: {item['correct_answer']}"
-            )
+            safe_question = html.escape(str(item["question_text"]))
+            safe_user_answer = html.escape(str(item["user_answer"]))
+            safe_correct_answer = html.escape(str(item["correct_answer"]))
 
+            lines.append(
+                f"<b>{index}.</b> {mark} {safe_question}\n"
+                f"   Ваша відповідь: <i>{safe_user_answer}</i>\n"
+                f"   Правильна відповідь: <i>{safe_correct_answer}</i>"
+            )
         return "\n\n".join(lines)

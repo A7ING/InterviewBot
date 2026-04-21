@@ -10,7 +10,7 @@ class HistoryService:
                 user_id=user_id,
                 username=username,
                 category=category,
-                score=result.total_score
+                score=result.total_score,
             )
             session.add(db_result)
             session.commit()
@@ -23,9 +23,12 @@ class HistoryService:
     def format_user_history(self, target_user_id):
         session = SessionLocal()
         try:
-            results = session.query(UserResult).filter(
-                UserResult.user_id == target_user_id
-            ).order_by(UserResult.timestamp.desc()).all()
+            results = (
+                session.query(UserResult)
+                .filter(UserResult.user_id == target_user_id)
+                .order_by(UserResult.timestamp.desc())
+                .all()
+            )
 
             if not results:
                 return "Історія тестів порожня."

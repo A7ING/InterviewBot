@@ -12,10 +12,20 @@ def get_direction_keyboard(categories):
 
 def get_question_keyboard(question):
     keyboard = []
-    for index, option in enumerate(question.options):
-        keyboard.append(
-            [InlineKeyboardButton(option, callback_data=f"answer:{index}")]
+    row = []
+
+    for index, _ in enumerate(question.options):
+        row.append(
+            InlineKeyboardButton(str(index + 1), callback_data=f"answer:{index}")
         )
+
+        if len(row) == 2:
+            keyboard.append(row)
+            row = []
+
+    if row:
+        keyboard.append(row)
+
     return InlineKeyboardMarkup(keyboard)
 
 
