@@ -1,8 +1,3 @@
-# OLD VERSION (hardcoded, security risk):
-# BOT_TOKEN = "8787189527:AAH6yNh1YOJyUfQ7uZCi0VpGRxNMm0hH4sE"
-# ADMIN_IDS = [746932940]
-# ADMIN_IDS = [822667976]
-
 import os
 from dotenv import load_dotenv
 
