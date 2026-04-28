@@ -1,3 +1,104 @@
 # Interview Preparation Bot
 
-This is a Telegram bot built with Python to help developers and QA engineers prepare for technical interviews. It provides interactive quizzes on topics like Python, Java, QA, and databases directly in the chat. The bot instantly checks your answers and saves your test results into a local SQLite database using SQLAlchemy, allowing you to track your progress over time. 
+Телеграм-бот для автоматизованої підготовки до технічних співбесід для IT-спеціалістів. Бот пропонує тестування з різних напрямків (Python, Java, QA тощо), збирає статистику правильних відповідей та допомагає виявити прогалини у знаннях.
+
+## Можливості
+
+* Інтерактивні тестування - покрокове проходження запитань з варіантами відповідей
+* Категорії питань - можливість обирати різні технічні напрямки для перевірки
+* Система сесій - підтримка одночасного тестування багатьох користувачів із автоматичним таймаутом
+* Відстеження прогресу - збереження історії проходжень та результатів у базу даних
+* Панель адміністратора - керування питаннями безпосередньо через інтерфейс бота (доступно лише за Admin ID)
+
+## Технології
+
+* Python 3.10+
+* [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) - Telegram Bot API
+* SQLite - локальна база даних
+* SQLAlchemy - ORM для роботи з базою даних
+* pytest - інструмент для модульного тестування
+
+## Структура проекту
+
+```text
+InterviewBot/
+├── main.py                  # Точка входу, ініціалізація та запуск бота
+├── config.py                # Завантаження конфігурації (env variables)
+├── data/                    # Початкові дані
+│   ├── seed_db.py           # Скрипт наповнення бази даних
+│   └── test_questions.py    # База тестових питань
+├── handlers/                # Обробники команд та повідомлень
+│   ├── admin_handler.py     # Логіка команд адміністратора
+│   ├── start_handler.py     # Логіка стартового меню
+│   └── test_handler.py      # Логіка проходження тестування
+├── keyboards/               # Клавіатури інтерфейсу бота
+│   └── inline_keyboards.py
+├── models/                  # Моделі даних бази та застосунку
+│   ├── question.py
+│   ├── result.py
+│   ├── session.py
+│   └── user_result.py
+├── services/                # Бізнес-логіка та робота з БД
+│   ├── db.py                # Налаштування підключення до БД
+│   ├── history_service.py   # Робота з історією користувачів
+│   ├── question_bank.py     # Управління списком питань
+│   ├── session_service.py   # Керування активними сесіями
+│   ├── shared_data.py       # Спільні інстанси сервісів
+│   └── statistics_service.py
+├── tests/                   # Модульні тести
+│   ├── test_commands.py
+│   └── test_services.py
+├── .env.example             # Приклад файлу конфігурації
+├── pytest.ini               # Налаштування для pytest
+└── requirements.txt         # Залежності проекту
+```
+
+## Встановлення
+
+1. Клонуйте репозиторій:
+```bash
+git clone [https://github.com/A7ING/InterviewBot.git](https://github.com/A7ING/InterviewBot.git)
+cd InterviewBot
+```
+
+2. Створіть віртуальне середовище:
+```bash
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # Linux/macOS
+```
+
+3. Встановіть залежності:
+```bash
+pip install -r requirements.txt
+```
+
+4. Створіть файл `.env` на основі прикладу `.env.example`:
+```env
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+ADMIN_IDS=123456789,987654321
+```
+
+## Запуск
+
+```bash
+python main.py
+```
+База даних `interview_bot.db` створюється автоматично при першому запуску програми або за допомогою скрипта `seed_db.py`.
+
+## Використання
+
+### Команди користувача
+* `/start` - Запуск бота та вибір напрямку тестування
+* `/stats` - Перегляд особистої статистики пройдених тестів
+
+### Адміністративні команди
+* `/add_question` - Додати нове питання до бази
+* `/delete_question` - Видалити існуюче питання
+
+## Тестування
+
+Для запуску модульних тестів та перевірки логіки програми виконайте команду:
+```bash
+pytest
+```
